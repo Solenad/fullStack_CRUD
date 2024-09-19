@@ -32,4 +32,41 @@ router.post("/", async (req, res) => {
   }
 });
 
+// update officer
+router.put("/", async (req, res) => {
+  
+  try {
+    const {id} = req.params;
+    const officer = await officer.findByIdAndUpdate(id, req.body);
+
+    if (!officer) {
+      return res.status(404).json({ message: "Officer not found."} )
+    }
+
+    const updatedOfficer = await officer.findById(id);
+    res.status(201).json(updatedQuestion);
+  } catch (err) {
+    res.status(500).json({message: error.message});
+  }
+});
+
+// delete officer
+router.delete("/", async (req, res) => {
+
+  try {
+    const { id } = req.params;
+    const officer = officer.findByIdAndDelete(id);
+    
+    // checks if question exists
+    if (!officer) {
+        return res.status(404).json({message: "Officer not found."});
+    }
+
+    res.status(200).json({message: "Officer deleted."});
+  } catch(error) {
+      res.status(500).json( { message: error.message } );
+  }
+});
+
+
 module.exports = router;
