@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(process.env.DB_URL, {})
   .then(() => {
     console.log("[Full Stack API] Connected to MongoDB Database successful.");
   })
@@ -20,8 +20,8 @@ mongoose
     );
   });
 
-const officer = require("./controllers/officers.js");
-app.use("/officer", officer);
+const officers = require("./controllers/officers.js");
+app.use("/officers", officers);
 
 const port = process.env.PORT;
 app.listen(port, () => {

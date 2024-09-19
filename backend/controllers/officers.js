@@ -4,9 +4,14 @@ const router = express.Router();
 const Officer = require("../models/officersModel");
 
 //get all officers
-router.get("/", async (req, reqs) => {
+router.get("/", async (req, res) => {
   try {
-    const officers = await Member.find({});
+    let filters = {};
+    if (req.query.position) {
+      filters.position = req.query.position;
+    }
+    const officers = await Officer.find(filters);
+    return res.json(officers);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
